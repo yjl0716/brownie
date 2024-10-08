@@ -11,7 +11,7 @@ on:
         - https://api.staging.endorlabs.com
         - https://api.endorlabs.com
       tenant_name:
-        description: "Enter your Endor Labs namespace?"
+        description: "jinlee"
         required: true
         type: string
 jobs:
