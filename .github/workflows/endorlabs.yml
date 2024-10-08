@@ -11,7 +11,7 @@ on:
         - https://api.staging.endorlabs.com
         - https://api.endorlabs.com
       tenant_name:
-        description: "jinlee"
+        description: "asdfjinlee"
         required: true
         type: string
 jobs:
@@ -53,7 +53,7 @@ jobs:
             namespace: "jinlee"
             scan_summary_output_type: "table"
             pr: "false"
-            enable_github_action_token: "false"
+            enable_github_action_token: "true"
             scan_dependencies: "true"
             scan_secrets: "true"
             scan_git_logs: "true"
