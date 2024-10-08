@@ -1,22 +1,63 @@
+name: Endor Labs Scan with Keyless Authentication
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      tenant_name:
+        description: "Enter your Endor Labs namespace"
+        required: true
+        type: string
+
 jobs:
-  scan-repo:
+  scan:
     permissions:
-      id-token: write  # This is required for requesting the JWT
-      contents: read  # This is required for actions/checkout
-      security-events: write  # This is required to upload SARIF results
+      security-events: write # Used to upload Sarif artifact to GitHub
+      contents: read # Used to check out a private repository
+      actions: read # Required for private repositories to upload Sarif files. GitHub Advanced Security licenses are required.
+      id-token: write # Used for keyless authentication with Endor Labs
+      pull-requests: write # Required to automatically comment on PRs for new policy violations
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-      
-      - name: Endor Labs Scan
-        uses: endorlabs/github-action@v1.1.4
-        with:
-          namespace: ${{ github.event.inputs.tenant_name }}
-          scan_summary_output_type: 'table'
-          scan_dependencies: true
-          scan_secrets: true
-          scan_git_logs: true
-          pr: false
-          sarif_file: 'findings.sarif'
-          additional_args: "--as-default-branch --api=${{ github.event.inputs.api }}"
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Endor Labs Scan Pull Request
+      if: github.event_name == 'pull_request'
+      uses: endorlabs/github-action@v1.1.4
+      with:
+        namespace: ${{ github.event.inputs.tenant_name || secrets.ENDOR_NAMESPACE }}
+        scan_dependencies: true
+        scan_secrets: true
+        pr: true
+        enable_pr_comments: true
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Endor Labs Scan Push to main
+      if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+      uses: endorlabs/github-action@v1.1.4
+      with:
+        namespace: ${{ github.event.inputs.tenant_name || secrets.ENDOR_NAMESPACE }}
+        scan_dependencies: true
+        scan_secrets: true
+        pr: false
+        scan_summary_output_type: 'table'
+        sarif_file: 'findings.sarif'
+
+    - name: Upload findings to github
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: 'findings.sarif'
