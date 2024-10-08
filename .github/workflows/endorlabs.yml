@@ -49,11 +49,6 @@ jobs:
             ENDOR_API_CREDENTIALS_KEY: endr+9QNXxB-Zy1bVT4IJ
           run: |
             endorctl init --api-key $ENDOR_API_CREDENTIALS_KEY
-          with:
-            namespace: "jinlee"
-            scan_summary_output_type: "table"
-            pr: "false"
-            enable_github_action_token: "true"
-            scan_dependencies: "true"
-            scan_secrets: "true"
-            scan_git_logs: "true"
+        - name: Run Endor Labs Scan
+          run: |
+            endorctl scan --namespace "jinlee" --project "brownie"
