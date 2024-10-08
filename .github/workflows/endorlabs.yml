@@ -46,8 +46,9 @@ jobs:
           uses: endorlabs/github-action@736c93ea52b002f2ac229aaeb273b102cbf6fe12
           env:
             ENDOR_LABS_REPO: "brownie"
-            ENDOR_API_CREDENTIALS_KEY: endr+tQyaqdkIZXcjw1Ji
-
+            ENDOR_API_CREDENTIALS_KEY: endr+9QNXxB-Zy1bVT4IJ
+          run: |
+            endorctl init --api-key $ENDOR_API_CREDENTIALS_KEY
           with:
             namespace: "jinlee"
             scan_summary_output_type: "table"
