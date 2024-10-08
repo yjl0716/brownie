@@ -4,7 +4,7 @@ on:
     inputs:
       api:
         description: "Enter the target Endor Labs API"
-        required: true
+        required: false
         type: choice
         default: https://api.endorlabs.com
         options:
