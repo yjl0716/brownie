@@ -47,7 +47,6 @@ jobs:
           env:
             ENDOR_LABS_REPO: "brownie"
             ENDOR_API_CREDENTIALS_KEY: endr+tQyaqdkIZXcjw1Ji
-            ENDOR_API_CREDENTIALS_SECRET: endr+jOJagTTcCKo1kZKE
 
           with:
             namespace: "jinlee"
