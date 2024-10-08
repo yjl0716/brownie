@@ -46,12 +46,9 @@ jobs:
           uses: endorlabs/github-action@736c93ea52b002f2ac229aaeb273b102cbf6fe12
           with:
             namespace: "jinlee"
-            api_key: "endr+qXwN9UFz3cgWUK4L"
-            api_secret: "endr+0Qs2iRYm6KUi2a8j"
             scan_summary_output_type: "table"
             pr: "false"
             enable_github_action_token: "true"
             scan_dependencies: "true"
             scan_secrets: "true"
             scan_git_logs: "true"
-            additional_args: "--as-default-branch --api=${{ github.event.inputs.api }}"
