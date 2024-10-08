@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Set up Python 3.11
       uses: actions/setup-python@v5
@@ -44,7 +44,7 @@ jobs:
         scan_secrets: true
         pr: false
         enable_pr_comments: true
-        scan_summary_output_type: "table"
+        scan_summary_output_type: table
         github_token: ${{ secrets.GITHUB_TOKEN }}
         tags: "actor=${{ github.actor }},run-id=${{ github.run_id }}"
 
