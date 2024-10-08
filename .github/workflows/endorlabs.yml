@@ -45,7 +45,7 @@ jobs:
           if: ${{ github.event_name == 'workflow_dispatch' }}
           uses: endorlabs/github-action@736c93ea52b002f2ac229aaeb273b102cbf6fe12
           with:
-            namespace: ${{ github.event.inputs.tenant_name }}
+            namespace: "jinlee"
             scan_summary_output_type: "table"
             pr: "false"
             enable_github_action_token: "true"
