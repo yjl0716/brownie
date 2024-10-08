@@ -55,7 +55,3 @@ jobs:
         api_secret: endr+AUSLG-jOxCa11r21
         enable_github_action_token: false
 
-    - name: Upload findings to github
-      uses: github/codeql-action/upload-sarif@v3
-      with:
-        sarif_file: 'findings.sarif'
